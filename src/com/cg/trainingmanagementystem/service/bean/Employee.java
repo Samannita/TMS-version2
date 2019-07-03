@@ -1,4 +1,4 @@
-package com.cg.trainingmanagementystem.service.bin;
+package com.cg.trainingmanagementystem.service.bean;
 
 import java.util.Date;
 

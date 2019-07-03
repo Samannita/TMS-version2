@@ -1,5 +1,7 @@
 package com.cg.trainingmanagementsystem.dao.impl;
 
+import java.sql.Statement;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,24 +9,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import com.cg.trainingmanagementystem.exception.CourseNullException;
-import com.cg.trainingmanagementystem.exception.ErrorMessages;
-import com.cg.trainingmanagementystem.exception.InvalidCourseIdException;
-import com.cg.trainingmanagementystem.exception.InvalidCourseNameException;
-import com.cg.trainingmanagementystem.exception.courseIdNotFoundException;
+import com.cg.trainingmanagementystem.exception.ErrorMessagesException;
+
+import com.cg.trainingmanagementystem.exception.Programexception;
+
 import com.cg.trainingmanagementystem.service.ICourseOperation;
-import com.cg.trainingmanagementystem.service.bin.Course;
+import com.cg.trainingmanagementystem.service.bean.Course;
 import com.cg.trainingmanagementystem.utility.DBConnection;
 import com.cg.trainingmanagementystem.utility.Queries;
 import com.cg.trainingmanagementystem.utility.UserInputValidator;
 
 public class CourseOperationDaoImpl implements ICrudOperation<Course> {
 
+	// this method will retrieve all the courses available in the database
+
 	@Override
 	public HashSet<Course> retrieveAll() throws SQLException {
 		// Step-1:open connection
 		Connection connection = DBConnection.getConnection();
-		String sql = Queries.Course_Details;
+		String sql = Queries.COURSE_DETAILS;
 		PreparedStatement preparedStatement = null;
 		Set<Course> courses = null;
 		System.out.println(connection);
@@ -50,78 +53,20 @@ public class CourseOperationDaoImpl implements ICrudOperation<Course> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		} finally {
-//			try {
-//				if (preparedStatement != null)
-//					connection.close();
-//			} catch (SQLException se) {
-//			}
-//			try {
-//				if (connection != null)
-//					connection.close();
-//			} catch (SQLException se) {
-//				se.printStackTrace();
-//			}
-//
-//		}
+
 		Connection connections = DBConnection.closeConnection();
 		return (HashSet<Course>) courses;
 	}
 
+//	this method will delete a course by giving the courseId
+
 	@Override
-	public boolean update(Course course) throws InvalidCourseIdException, SQLException {
+	public boolean delete(String courseId) throws SQLException, Programexception {
 		// TODO Auto-generated method stub
-		Connection connection = DBConnection.getConnection();
-		String sql = Queries.Update_course;
-		PreparedStatement preparedStatement = null;
-		Set<Course> courses = null;
-		System.out.println(connection);
-		try {
-			// Step-2:execute query
-			preparedStatement = connection.prepareStatement(sql);
-			courses = new HashSet<Course>();
-			ResultSet rs = preparedStatement.executeQuery(sql);
-			// Step-3:extract data from result set
-			while (rs.next()) {
-				Course coursedto = new Course();
-				coursedto.setCourseId(rs.getString(1));
-				coursedto.setCourseName(rs.getString(2));
-				coursedto.setCourseDesc(rs.getString(3));
-				coursedto.setCourseCharges(rs.getInt(4));
-				courses.add(coursedto);
+		boolean flag = false;
 
-			}
-			// Step-4:Closing
-			rs.close();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-//		} finally {
-//			try {
-//				if (preparedStatement != null)
-//					connection.close();
-//			} catch (SQLException se) {
-//			}
-//			try {
-//				if (connection != null)
-//					connection.close();
-//			} catch (SQLException se) {
-//				se.printStackTrace();
-//			}
-//
-//		}
-		Connection connections = DBConnection.closeConnection();
-		return false;
-	}
-
-	@Override
-	public boolean delete(Course course) throws InvalidCourseIdException, SQLException, courseIdNotFoundException {
-		// TODO Auto-generated method stub
-		Course course2 = new Course();
 		Connection connection = DBConnection.getConnection();
-		String sql = Queries.Delete_Course;
+		String sql = Queries.DELETE_COURSE ;
 		PreparedStatement preparedStatement = null;
 		Set<Course> courses = null;
 		System.out.println(connection);
@@ -129,79 +74,70 @@ public class CourseOperationDaoImpl implements ICrudOperation<Course> {
 		try {
 			// Step-2:execute query
 			preparedStatement = connection.prepareStatement(sql);
-			courses = new HashSet<Course>();
+			preparedStatement.setString(1, courseId);
 
-			ResultSet rs = preparedStatement.executeQuery(sql);
-			String CId = course2.getCourseId();
-			// Step-3:extract data from result set
-			while (rs.next()) {
-				if (CId.equals(rs.getString(1))) {
-					Course coursedto = new Course();
-					coursedto.setCourseId(rs.getString(1));
-					coursedto.setCourseName(rs.getString(1));
-					coursedto.setCourseDesc(rs.getString(2));
-					coursedto.setCourseCharges(rs.getInt(3));
-					courses.add(coursedto);
+			preparedStatement.execute();
+			connection.commit();
 
-				}
-			}
-			// Step-4:Closing
-			rs.close();
+			// preparedStatement.close();
 		} catch (SQLException ex) {
-			throw new courseIdNotFoundException(ErrorMessages.MESSAGE1);
+			throw new Programexception(ErrorMessagesException.MESSAGE1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Programexception(ErrorMessagesException.MESSAGE2);
 		}
 
 		Connection connections = DBConnection.closeConnection();
-		return false;
+		return flag;
 	}
 
-	@Override
-	public boolean create(Course course) throws CourseNullException, SQLException {
-		Connection connection = DBConnection.getConnection();
-		String sql = Queries.Add_Course;
-		PreparedStatement preparedStatement = null;
-		Set<Course> courses = null;
-		System.out.println(connection);
+	// this method will create course and that will be added to the database
 
+	@Override
+	public boolean create(Course course) throws SQLException, Programexception {
+		// Step-1 : connection
+		Connection connection = DBConnection.getConnection();
+//		
+		String sql = Queries.ADD_COURSE;
+		PreparedStatement preparedStatement = null;
+
+		boolean value = false;
 		try {
 			// Step-2:execute query
 			preparedStatement = connection.prepareStatement(sql);
-			courses = new HashSet<Course>();
 
-			ResultSet rs = preparedStatement.executeQuery(sql);
-			// Step-3:extract data from result set
-			while (rs.next()) {
-				Course coursedto = new Course();
-				coursedto.setCourseId(rs.getString(1));
-				coursedto.setCourseName(rs.getString(2));
-				coursedto.setCourseDesc(rs.getString(3));
-				coursedto.setCourseCharges(rs.getInt(4));
-				courses.add(coursedto);
+			preparedStatement.setString(1, course.getCourseId());
+			preparedStatement.setString(2, course.getCourseName());
+			preparedStatement.setString(3, course.getCourseDesc());
+			preparedStatement.setInt(4, course.getCourseCharges());
 
-			}
-			// Step-4:Closing
-			rs.close();
+			preparedStatement.execute();
+
+			connection.commit();
+
+			// preparedStatement.close();
+
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			throw new Programexception(ErrorMessagesException.MESSAGE1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Programexception(ErrorMessagesException.MESSAGE2);
 		}
 
 		Connection connections = DBConnection.closeConnection();
-		return false;
+
+		return value;
 	}
 
+//this method will fetch a particular course details by giving the courseId
+
 	@Override
-	public Course retrieveCourse(String courseId) throws SQLException, courseIdNotFoundException {
+	public Course retrieveCourse(String courseId) throws SQLException, Programexception {
 
 		Connection connection = DBConnection.getConnection();
 
+		String sql = Queries.COURSE_DETAILS_THROUGH_COURSEID ;
+
+		PreparedStatement preparedStatement = null;
 		Course course = null;
-		String sql = Queries.Course_Details_Through_CourseId;
-
-		PreparedStatement preparedStatement = null;
 
 		try {
 			// Step-2:execute query
@@ -209,24 +145,24 @@ public class CourseOperationDaoImpl implements ICrudOperation<Course> {
 			preparedStatement.setString(1, courseId);
 			System.out.println(courseId);
 			ResultSet rs = preparedStatement.executeQuery();
+
 			while (rs.next()) {
 				course = new Course();
-				course.setCourseName(rs.getString(1));
+				course.setCourseId(rs.getString(1));
 				course.setCourseName(rs.getString(2));
 				course.setCourseDesc(rs.getString(3));
 				course.setCourseCharges(rs.getInt(4));
-				// System.out.println(rs.getString(1));
+
 			}
 
-			// }
 			// Step-4:Closing
 			rs.close();
 
 		} catch (SQLException ex) {
-			System.out.println("1");
-			throw new courseIdNotFoundException(ErrorMessages.MESSAGE1);
+
+			throw new Programexception(ErrorMessagesException.MESSAGE1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Programexception(ErrorMessagesException.MESSAGE2);
 		}
 
 		return course;

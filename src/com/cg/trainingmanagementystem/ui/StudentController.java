@@ -2,8 +2,8 @@ package com.cg.trainingmanagementystem.ui;
 
 import java.util.*;
 
-import com.cg.trainingmanagementystem.service.bin.Student;
-import com.cg.trainingmanagementystem.service.bin.TrainingProgram;
+import com.cg.trainingmanagementystem.service.bean.Student;
+import com.cg.trainingmanagementystem.service.bean.TrainingProgram;
 
 public class StudentController {
 

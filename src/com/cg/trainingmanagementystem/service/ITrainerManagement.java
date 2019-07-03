@@ -2,7 +2,7 @@ package com.cg.trainingmanagementystem.service;
 
 import java.util.*;
 
-import com.cg.trainingmanagementystem.service.bin.Trainer;
+import com.cg.trainingmanagementystem.service.bean.Trainer;
 import com.cg.trainingmanagementystem.service.enumv.Skills;
 
 /**

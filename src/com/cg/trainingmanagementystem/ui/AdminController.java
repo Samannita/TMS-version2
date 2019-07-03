@@ -1,8 +1,8 @@
 package com.cg.trainingmanagementystem.ui;
 
-import com.cg.trainingmanagementystem.service.bin.Course;
-import com.cg.trainingmanagementystem.service.bin.Feedback;
-import com.cg.trainingmanagementystem.service.bin.Trainer;
+import com.cg.trainingmanagementystem.service.bean.Course;
+import com.cg.trainingmanagementystem.service.bean.Feedback;
+import com.cg.trainingmanagementystem.service.bean.Trainer;
 
 /**
  * 

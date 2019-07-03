@@ -13,70 +13,46 @@ import com.cg.trainingmanagementystem.utility.*;
 import java.sql.SQLException;
 import java.util.*;
 
-import com.cg.trainingmanagementystem.exception.InvalidCourseIdException;
-import com.cg.trainingmanagementystem.exception.InvalidCourseNameException;
-import com.cg.trainingmanagementystem.exception.courseIdNotFoundException;
-import com.cg.trainingmanagementystem.service.ICourseOperation;
-import com.cg.trainingmanagementystem.service.bin.Course;
+import com.cg.trainingmanagementystem.exception.Programexception;
 
-//import com.cg.trainingmanagementystem.services.CoordinatorService;
+import com.cg.trainingmanagementystem.service.ICourseOperation;
+import com.cg.trainingmanagementystem.service.bean.Course;
+
 public class CourseOperationImpl extends UserInputValidator implements ICourseOperation {
+
+	// this service method will call the create() of CourseOerationDaoImpl to add
+	// the course
 
 	@Override
 	public boolean addCourse(String courseId, String courseName, String courseDesc, int courseCharges, Course course)
-			throws InvalidCourseIdException, InvalidCourseNameException {
-		if (DataExistenceCheck.DataExistenceCheck(courseId)) {
-			Set<Course> courses = DataBaseEntry.infoDb();
-			for (Course cor : courses) {
-				if (cor.getCourseId().equalsIgnoreCase(courseId)) {
-					ICrudOperation<Course> iCrudOperation = (ICrudOperation<Course>) new CourseOperationDaoImpl();
-					// iCrudOperation.addCourses(courses);
-				}
-			}
+			throws Programexception, SQLException {
 
-		}
+		boolean flag = false;
 
-		return false;
+		ICrudOperation<Course> iCrudOperation = new CourseOperationDaoImpl();
+		flag = iCrudOperation.create(course);
+
+		return flag;
+
 	}
+
+	// this service method will call the delete() of CourseOerationDaoImpl to delete
+	// the course
 
 	@Override
-	public boolean deleteCourse(String courseId, String courseName, String courseDesc, int courseCharges, Course course)
-			throws InvalidCourseIdException, InvalidCourseNameException {
-		if (DataExistenceCheck.DataExistenceCheck(courseId)) {
-			Set<Course> courses = DataBaseEntry.infoDb();
-			Course courseTemp = null;
-			for (Course cors : courses) {
-				if (cors.getCourseId().equals(courseId)) {
-					courseTemp = cors;
-					break;
-				}
-			}
-			if (courseTemp != null) {
-				courses.remove(courseTemp);
-			} else {
-				throw new InvalidCourseIdException("Not valid course");
-			}
-		}
-		return false;
+	public boolean deleteCourse(String courseId) throws SQLException, Programexception {
+
+		boolean flag = false;
+
+		ICrudOperation<Course> iCrudOperation = new CourseOperationDaoImpl();
+		flag = iCrudOperation.delete(courseId);
+
+		return flag;
 
 	}
 
-	@Override
-	public boolean modifyCourse(String courseId, String courseName, String courseDesc, int courseCharges, Course course)
-			throws InvalidCourseIdException, InvalidCourseNameException {
-		// if(UserInputValidator.courseNameValid(courseName) ) {
-		HashSet<Course> co = (HashSet<Course>) DataBaseEntry.course;
-		Iterator<Course> value = co.iterator();
-		while (value.hasNext()) {
-			Course cor = (Course) value.next();
-			if (courseName.equals(cor.getCourseName()))
-				cor.setCourseId(courseId);
-			// cs.modifyCourse(course);
-
-		}
-		return false;
-
-	}
+	// this service method will call the retrieveAll() of CourseOerationDaoImpl to
+	// fetch all the course available in the database
 
 	@Override
 	public Set<Course> getAllCourse() throws SQLException {
@@ -86,24 +62,18 @@ public class CourseOperationImpl extends UserInputValidator implements ICourseOp
 
 	}
 
-	@Override
-	public Course retrieveCourse(String courseId) throws SQLException, courseIdNotFoundException 
-	{
-		//System.out.println("1st stmnt");
-		ICrudOperation<Course> crudOperation = new CourseOperationDaoImpl();
-		//System.out.println("2nd ");
-		Course courses = crudOperation.retrieveCourse(courseId);
-		//System.out.println("3rd "+courses);
+	// this service method will call the retrieveCourse() of CourseOerationDaoImpl
+	// to fetch a particular course details through courseId
 
+	@Override
+	public Course retrieveCourse(String courseId) throws SQLException, Programexception {
+
+		ICrudOperation<Course> crudOperation = new CourseOperationDaoImpl();
+
+		Course courses = crudOperation.retrieveCourse(courseId);
 
 		return courses;
 
 	}
-
-//	@Override
-//	public Set<Course> retrieveCourse(Set<Course> courses) throws SQLException, courseIdNotFoundException {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 }

@@ -1,7 +1,7 @@
 package com.cg.trainingmanagementystem.service;
 
-import com.cg.trainingmanagementystem.service.bin.Feedback;
-import com.cg.trainingmanagementystem.service.bin.TrainingProgram;
+import com.cg.trainingmanagementystem.service.bean.Feedback;
+import com.cg.trainingmanagementystem.service.bean.TrainingProgram;
 
 public interface IFeedbackOperation {
 

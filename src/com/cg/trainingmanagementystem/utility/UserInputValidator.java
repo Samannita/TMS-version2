@@ -2,88 +2,49 @@ package com.cg.trainingmanagementystem.utility;
 
 import java.util.Set;
 
-import com.cg.trainingmanagementystem.exception.CourseNameNullException;
-import com.cg.trainingmanagementystem.exception.CourseNullException;
-import com.cg.trainingmanagementystem.exception.InvalidCourseIdException;
-import com.cg.trainingmanagementystem.exception.InvalidCourseNameException;
-import com.cg.trainingmanagementystem.service.bin.Course;
+import com.cg.trainingmanagementystem.exception.InvalidFormatInput;
+import com.cg.trainingmanagementystem.service.bean.Course;
 
 public class UserInputValidator {
 	
-	public static String courseIdValidLength(String courseId) {
+	public static boolean courseIdValidLength(String courseId) throws  InvalidFormatInput {
 		
-		try {
-			if((courseId.matches("[CD][_][0-9]{3}"))) {
-				return courseId;
-			}	
-			else {
-				throw new InvalidCourseIdException("Invalid CourseId");	
+		if (!courseId.matches("CO_[0-9]{4}")) {
+			throw new InvalidFormatInput("Invalid format of input for Course! \n You must use CD_1001 format");
 		}
-		}
-		catch(InvalidCourseIdException e) {
-			e.getMessage();
-		}
-		return courseId;
-		
+		return true;
 	
 		
 	}
 	
 
-	public static String courseNameValid(String courseName) {
-		boolean flag=false;
-		try {
-			String regex="[A-Za-z]{1,30}";
-			if((courseName.matches(regex))) {
-				return courseName;
-			}
-			else {
-				throw new InvalidCourseNameException();
-		}
-		}
-			catch(InvalidCourseNameException e) {
-				e.getMessage();
-			}
-		return courseName ;
-		
-	}
-	public static String courseIdNotEmpty(String courseId) {
-		
-		try {
-			if(courseId!=null ) {
-				return courseId;
-			}
-			else {
-				throw new CourseNullException();
-		}
-		}
-		
-		catch(CourseNullException e) {
-			e.getMessage();
-		}
-		return courseId;
-	}
+	public static boolean courseNameValid(String courseName) throws  InvalidFormatInput {
 	
-public static String courseNameNotEmpty(String courseName) throws CourseNameNullException{
-	try {
-		if(courseName!=null ) {
-			return courseName;
+			boolean flag = false;
+			if (!courseName.matches("[A-Za-z\\s]{4,}")) {
+				throw new InvalidFormatInput(
+						"Invalid format Name! \n Your name cannot contain special character or digits");
+			}
+			return true;
 		}
-		else {
-			throw new CourseNullException();
-	}
-	}
+		
 	
-	catch(CourseNullException e) {
-		e.getMessage();
+	public static boolean courseIdNotEmpty(String courseId) throws  InvalidFormatInput {
+			
+			if(courseId==null ) {
+				 throw new InvalidFormatInput("Course id cant be null");
+			}
+			return true;
+		}
+		
+	
+	
+public static boolean courseNameNotEmpty(String courseName) throws  InvalidFormatInput {
+	
+	if(courseName==null ) {
+		 throw new InvalidFormatInput("Course name cant be null");
 	}
-	return courseName;
-}
-
-
-public boolean deleteCourse(Set<Course> course) throws InvalidCourseIdException, InvalidCourseNameException {
-	// TODO Auto-generated method stub
-	return false;
+	return true;
 }
 
 
@@ -92,3 +53,9 @@ public boolean deleteCourse(Set<Course> course) throws InvalidCourseIdException,
 
 
 }
+
+
+
+
+
+

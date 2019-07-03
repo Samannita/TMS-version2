@@ -2,7 +2,7 @@ package com.cg.trainingmanagementystem.service;
 
 
 
-import com.cg.trainingmanagementystem.service.bin.TrainingProgram;
+import com.cg.trainingmanagementystem.service.bean.TrainingProgram;
 
 /**
  * 

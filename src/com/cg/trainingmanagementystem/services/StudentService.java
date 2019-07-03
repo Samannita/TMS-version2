@@ -1,7 +1,7 @@
 
 package com.cg.trainingmanagementystem.services;
 
-import com.cg.trainingmanagementystem.service.bin.Student;
+import com.cg.trainingmanagementystem.service.bean.Student;
 
 public class StudentService {
 

@@ -1,4 +1,4 @@
-package com.cg.trainingmanagementystem.service.bin;
+package com.cg.trainingmanagementystem.service.bean;
 
 public class Feedback {
 

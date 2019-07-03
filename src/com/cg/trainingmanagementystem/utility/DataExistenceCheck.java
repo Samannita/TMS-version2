@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.cg.trainingmanagementsystem.dao.impl.DataBaseEntry;
-import com.cg.trainingmanagementystem.service.bin.Course;
+import com.cg.trainingmanagementystem.service.bean.Course;
 
 public class DataExistenceCheck {
 	public static boolean DataExistenceCheck(String courseId) {

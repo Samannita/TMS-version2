@@ -1,11 +1,13 @@
 package com.cg.trainingmanagementsystem.dao.impl;
+
 import java.sql.SQLException;
+
 import java.util.*;
 
-import com.cg.trainingmanagementystem.exception.CourseNullException;
-import com.cg.trainingmanagementystem.exception.InvalidCourseIdException;
-import com.cg.trainingmanagementystem.exception.courseIdNotFoundException;
-import com.cg.trainingmanagementystem.service.bin.Course;
+
+import com.cg.trainingmanagementystem.exception.Programexception;
+
+import com.cg.trainingmanagementystem.service.bean.Course;
 
 /**
  * 
@@ -13,43 +15,28 @@ import com.cg.trainingmanagementystem.service.bin.Course;
 public interface ICrudOperation<T> {
 
 	/**
-	 * @throws CourseNullException 
-	 * @throws SQLException 
+	 * @throws CourseNullException
+	 * @throws SQLException
+	 * @throws courseIdNotFoundException
+	 * @throws Programexception
 	 * 
 	 */
-	public boolean create(Course course) throws CourseNullException, SQLException;
+	public boolean create(Course course) throws SQLException, Programexception;
 
 	/**
-	 * @throws InvalidCourseIdException 
-	 * @throws SQLException 
+	 * @throws InvalidCourseIdException
+	 * @throws SQLException
 	 * 
 	 */
-	public boolean update(Course course) throws InvalidCourseIdException, SQLException;
+
+	public boolean delete(String courseId) throws SQLException, Programexception;
 
 	/**
-	 * @throws SQLException 
-	 * @throws courseIdNotFoundException 
-	 * 
-	 */
-	//public HashSet<Course> retrieve(Set<Course> courseId) throws SQLException, courseIdNotFoundException;
-
-	/**
-	 * @throws InvalidCourseIdException 
-	 * @throws SQLException 
-	 * @throws courseIdNotFoundException 
-	 * 
-	 */
-	public boolean delete(Course course) throws InvalidCourseIdException, SQLException, courseIdNotFoundException;
-
-	/**
-	 * @throws SQLException 
+	 * @throws SQLException
 	 * 
 	 */
 	public HashSet<T> retrieveAll() throws SQLException;
-	
 
-	Course retrieveCourse(String courseId) throws SQLException, courseIdNotFoundException;
-
-	
+	public Course retrieveCourse(String courseId) throws SQLException, Programexception;
 
 }

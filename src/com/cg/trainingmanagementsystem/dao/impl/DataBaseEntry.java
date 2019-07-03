@@ -3,7 +3,7 @@ package com.cg.trainingmanagementsystem.dao.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.cg.trainingmanagementystem.service.bin.Course;
+import com.cg.trainingmanagementystem.service.bean.Course;
 
 
 public class DataBaseEntry {

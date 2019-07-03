@@ -4,9 +4,9 @@ package com.cg.trainingmanagementystem.services;
 import com.cg.trainingmanagementystem.service.ICourseOperation;
 import com.cg.trainingmanagementystem.service.IFeedbackOperation;
 import com.cg.trainingmanagementystem.service.ITrainerManagement;
-import com.cg.trainingmanagementystem.service.bin.Course;
-import com.cg.trainingmanagementystem.service.bin.Feedback;
-import com.cg.trainingmanagementystem.service.bin.Trainer;
+import com.cg.trainingmanagementystem.service.bean.Course;
+import com.cg.trainingmanagementystem.service.bean.Feedback;
+import com.cg.trainingmanagementystem.service.bean.Trainer;
 
 public class AdminServices {
 

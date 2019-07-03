@@ -1,12 +1,11 @@
 package com.cg.trainingmanagementsystem.dao.impl;
 import java.util.*;
 
-import com.cg.trainingmanagementystem.exception.CourseNullException;
-import com.cg.trainingmanagementystem.exception.InvalidCourseIdException;
-import com.cg.trainingmanagementystem.exception.InvalidCourseNameException;
+
+
 import com.cg.trainingmanagementystem.service.ICourseOperation;
-import com.cg.trainingmanagementystem.service.bin.Course;
-import com.cg.trainingmanagementystem.service.bin.Feedback;
+import com.cg.trainingmanagementystem.service.bean.Course;
+import com.cg.trainingmanagementystem.service.bean.Feedback;
 
 /**
  * 

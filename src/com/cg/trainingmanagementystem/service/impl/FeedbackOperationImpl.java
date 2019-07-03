@@ -3,8 +3,8 @@ package com.cg.trainingmanagementystem.service.impl;
 import java.util.*;
 
 import com.cg.trainingmanagementystem.service.IFeedbackOperation;
-import com.cg.trainingmanagementystem.service.bin.Feedback;
-import com.cg.trainingmanagementystem.service.bin.TrainingProgram;
+import com.cg.trainingmanagementystem.service.bean.Feedback;
+import com.cg.trainingmanagementystem.service.bean.TrainingProgram;
 
 /**
  * 
